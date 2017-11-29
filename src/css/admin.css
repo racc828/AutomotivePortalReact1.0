@@ -1,0 +1,156 @@
+select {
+  display:block;
+}
+
+.side-navigation {
+  height:100vh;
+  box-shadow:0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding-top:60px;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+
+.side-navigation ul {
+  margin-top:0;
+}
+
+.zero-side-pad {
+  padding-left:0!important;
+  padding-right:0!important;
+}
+
+.active-section {
+  padding-left:12px;
+  padding-right:12px;
+}
+
+.client-nav-button {
+  background:transparent;
+  box-shadow:none;
+  width:100%;
+  text-align:left;
+  text-transform:none;
+  border-radius:0;
+  font-size:.9rem;
+  padding-left:15px;
+}
+
+.client-nav-button:hover,
+.client-nav-button:focus,
+.client-nav-button:active {
+  color:#fff;
+  background:#f9423a;
+}
+
+.nav-header {
+  background:#e4e4e4;
+  position:relative;
+}
+
+.nav-header h6 {
+  padding:10px 25px 10px 15px;
+  color:#333;
+  font-size:.8rem;
+  text-transform: uppercase;
+  margin-bottom:0;
+}
+
+.relative {
+  position:relative;
+}
+
+.inline {
+  display:inline-block;
+}
+
+.side-nav-top .caret-button,
+.nav-header .plus-button {
+  border:none;
+  float:right;
+  background:transparent;
+  border-radius:none;
+  position:absolute;
+  top:5px;
+  right:15px;
+}
+
+.nav-header .fa-plus {
+  font-size:.9rem;
+}
+
+.side-nav-top {
+  padding-left:15px;
+  padding-top:15px;
+}
+
+.side-nav-top h5 {
+  margin-bottom:20px;
+}
+
+.calendar-outter-container {
+  min-height:100vh;
+  width:100%;
+  margin:auto;
+  display:flex;
+}
+
+.calendar-inner-container {
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+}
+
+.client-top-navigation {
+  box-shadow:0 1px 6px 0 rgba(0,0,0,0.12), 0 1px 6px 0 rgba(0,0,0,0.12);
+  height:50px;
+}
+
+.client-top-navigation ul{
+  margin:0;
+}
+
+.float-right-times {
+  position:absolute;
+  right:25px;
+  top:15px;
+  font-size:.9rem;
+  font-weight:200;
+}
+
+.modal-header {
+  background:#f9423a;
+  color:#fff;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+}
+
+.align-right {
+  text-align:right;
+}
+
+.pad-top {
+  padding-top:30px;
+}
+
+.form-container {
+  padding-top:50px;
+}
+
+.modal-header h5 {
+  padding-left:25px;
+}
+
+.client-top-navigation li {
+  display:inline-block;
+  line-height:50px;
+  padding: 0 10px;
+  color:#fff;
+}
+
+.form-container {
+  width:90%;
+  margin:0 auto;
+}

@@ -1,0 +1,31 @@
+body {
+  background:#eee;
+  font-family: 'Roboto',Helvetica,Arial,sans-serif;
+  font-weight:300;
+}
+
+[type="checkbox"]+label {
+  padding-left:23px;
+}
+
+.checkbox-container span {
+  margin-left:10px;
+}
+
+.checkbox-container {
+  display:inline-block;
+  margin-left:10px;
+  margin-bottom:10px;
+}
+
+.text-primary {
+  color:#f9423a;
+}
+
+.bg-primary {
+  background:#f9423a;
+}
+
+span {
+  display:inline-block;
+}
