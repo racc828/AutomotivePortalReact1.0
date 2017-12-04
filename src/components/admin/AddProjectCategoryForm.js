@@ -21,7 +21,7 @@ export default class AddProjectCategoryForm extends React.Component {
     e.preventDefault()
     let projectCategory = this.state
     this.props.addProjectCategory(projectCategory)
-    this.props.closeProjectCategoryForm()
+    this.props.close()
   }
 
 
@@ -29,11 +29,14 @@ export default class AddProjectCategoryForm extends React.Component {
     return(
       <form onSubmit={this.handleSubmit}>
         <input type="text" name="title" onChange={this.handleChange} placeholder="Category Name" required/>
-        <input type="color" name="color" onChange={this.handleChange} />
+        <h6>Category Color:</h6>
+        <input className="color" type="color" name="color" onChange={this.handleChange} />
         <div>
-          <button className="waves-effect waves-light btn" type="submit">
-            Add Category
-          </button>
+          <div className="align-right">
+            <button className="waves-effect waves-light btn" type="submit">
+              Add Category
+            </button>
+          </div>
         </div>
       </form>
     )

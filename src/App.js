@@ -17,7 +17,8 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      currentUser: {}
+      currentUser: {},
+      error:false
     }
   }
 
@@ -30,6 +31,7 @@ class App extends Component {
         })
       })
     }
+
   //
   //   componentWillReceiveProps(){
   //   SessionsAdapter.currentUser()
@@ -43,14 +45,26 @@ class App extends Component {
   getUser = (user) => {
      return SessionsAdapter.getUser(user)
      .then( (userData) => {
-       this.setState({
-         currentUser: userData
-       })
+       if(userData.error) {
+         this.setState({
+           error: true
+         })
+       } else {
+         this.setState({
+           currentUser: userData,
+           error:false
+         })
+       }
        localStorage.setItem('token', userData.jwt)
      })
      .then(() => {
-       this.state.currentUser.admin ? this.context.router.history.push("/adminHome") :
-       this.context.router.history.push("/clientHome")
+       if(this.state.currentUser.admin) {
+          this.context.router.history.push("/adminHome")
+       } else if (this.state.currentUser.admin == false) {
+         this.context.router.history.push("/clientHome")
+       } else {
+
+       }
      })
    }
 
@@ -66,7 +80,7 @@ class App extends Component {
 
     renderLogin = () => {
       return(
-        <Login getUser={this.getUser} />
+        <Login getUser={this.getUser} error={this.state.error} />
       )
     }
 

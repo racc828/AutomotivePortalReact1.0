@@ -18,9 +18,51 @@ body {
   margin-bottom:10px;
 }
 
+.btn:focus {
+  background:#f9423a;
+}
+
 .text-primary {
   color:#f9423a;
 }
+
+.margin-bottom {
+  margin-bottom:15px;
+}
+
+.comment {
+  border-bottom:1px solid #000;
+}
+
+
+.edit-icon-right {
+  position:absolute;
+  right:20px;
+  top:0;
+  background:transparent;
+  border-color:#f9423a;
+  border-radius:50%;
+  transition-property:background, border, box-shadow, color;
+  transition-duration:.2s;
+  box-shadow:0 0 0 3px #f9423a;
+}
+
+.edit-icon-right:focus {
+  background:#f9423a;
+}
+
+.edit-icon-right:hover{
+  background:#f9423a;
+}
+.edit-icon-right:hover i {
+  color:#fff;
+}
+
+.edit-icon-right i {
+  color:#f9423a;
+  font-size:1.0rem;
+}
+
 
 .bg-primary {
   background:#f9423a;

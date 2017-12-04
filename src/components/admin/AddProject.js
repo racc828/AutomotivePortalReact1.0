@@ -15,7 +15,7 @@ export default class AddProject extends React.Component {
            <h5> Add Project </h5>
          </div>
          <div className="form-container">
-           <AddProjectForm projectCategories={this.props.projectCategories} projectData={this.props.projectData} addProject={this.props.addProject} />
+           <AddProjectForm admins={this.props.admins} projectCategories={this.props.projectCategories} projectData={this.props.projectData} addProject={this.props.addProject} />
          </div>
       </div>
     )

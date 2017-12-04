@@ -9,6 +9,8 @@ import Modal, {closeStyle} from 'simple-react-modal'
 import ProjectCategoriesAdapter from '../../adapters/ProjectCategoriesAdapter'
 import AddProjectCategory from './AddProjectCategory'
 import AddProject from './AddProject'
+import EditProject from './EditProject'
+import SlideInToDoList from './SlideInToDoList'
 
 BigCalendar.momentLocalizer(moment);
 
@@ -20,8 +22,12 @@ export default class ClientCalendar extends React.Component {
           projectCategories: [],
           filteredProjects: [],
           addProjectModalOpen:false,
+          editProjectModalOpen: false,
           projectData: null,
-          projects: []
+          projects: [],
+          deactivateCats: [],
+          SlideInToDoListVisible: false
+
         }
     }
 
@@ -29,7 +35,8 @@ export default class ClientCalendar extends React.Component {
       UsersAdapter.getProjectCategories(this.props.activeClient.id)
       .then(data => {
         this.setState({
-          projectCategories: data,
+          projectCategories: data.projectcategories,
+          filteredProjects: data.projects
         })
       })
     }
@@ -38,7 +45,8 @@ export default class ClientCalendar extends React.Component {
     UsersAdapter.getProjectCategories(props.activeClient.id)
     .then(data => {
       this.setState({
-        projectCategories: data
+        projectCategories: data.projectcategories,
+        filteredProjects: data.projects
       })
     })
   }
@@ -53,18 +61,23 @@ export default class ClientCalendar extends React.Component {
   }
 
   renderAddProject = (data) => {
+    if(this.state.projectCategories.length === 0) {
+      alert("You must add a category first")
+    }else {
       this.setState({
         addProjectModalOpen: true,
         projectData: data
       })
     }
+  }
 
   addProject = (event, start, end) => {
       ProjectsAdapter.addProject(event,start, end, this.props.activeClient.id)
       .then((data) => {
         this.setState({
           addProjectModalOpen: false,
-          projectData: null
+          projectData: null,
+          filteredProjects: [...this.state.filteredProjects, data]
         })
       })
     }
@@ -72,16 +85,98 @@ export default class ClientCalendar extends React.Component {
   close = () => {
     this.setState({
       addProjectModalOpen:false,
+      editProjectModalOpen:false,
       projectData: null
     })
   }
 
-  filteredProjects = (filteredProject) => {
+  deactivateCats = (projectId) => {
     this.setState({
-      filteredProjects: [...this.state.filteredProjects, filteredProject]
+      deactivateCats:[...this.state.deactivateCats, projectId]
+    }, () => {
+      ProjectsAdapter.filterProjects(this.state.deactivateCats, this.props.activeClient.id)
+      .then((data) => {
+        this.setState({
+          filteredProjects: data
+        })
+      })
     })
   }
 
+  // activateCats = (activateProjectId) => {
+  //   let index = this.state.deactivateCats.indexOf(activateProjectId)
+  //   this.setState({
+  //     deactivateCats: this.state.deactivateCats.splice(index, 1)
+  //   }, () => {
+  //     ProjectsAdapter.filterProjects(this.state.deactivateCats, this.props.activeClient.id)
+  //     .then((data) => {
+  //       this.setState({
+  //         filteredProjects: data
+  //       })
+  //     })
+  //   })
+  // }
+
+  renderEditEvent = (data) => {
+    this.setState({
+      editProjectModalOpen:true,
+      projectData: data
+    })
+  }
+
+  editProjectTitle = (newTitle, projectId) => {
+    ProjectsAdapter.editProjectTitle(newTitle, projectId)
+    .then((data) => {
+      let index = this.state.filteredProjects.findIndex(project=> project.id === data.id)
+
+      this.setState({
+        filteredProjects: [
+         ...this.state.filteredProjects.slice(0,index),
+         Object.assign({}, this.state.filteredProjects[index], data),
+         ...this.state.filteredProjects.slice(index+1)
+       ],
+       projectData: data
+     });
+
+    })
+  }
+
+  // deletes on backend only
+  deleteProject = (projectId) => {
+    ProjectsAdapter.deleteProject(projectId)
+    .then((data) => {
+      let index = this.state.filteredProjects.findIndex(project=> project.id === data.id)
+      this.setState({
+        editProjectModalOpen:false
+      })
+    })
+  }
+
+
+  // filteredProjects = (filteredProject) => {
+  //   ProjectsAdapter.filterProjects(filteredProject, this.props.activeClient.id)
+  //   .then((data) => {
+  //     this.setState({
+  //       filteredProjects: data,
+  //       deactivateCats: [...this.state.deactivatCats, filteredProject]
+  //     })
+  //   })
+  // }
+
+  eventStyleGetter = (event, start, end, isSelected) => {
+      var backgroundColor = event.category_color;
+      var style = {
+          backgroundColor: backgroundColor,
+          borderRadius: '0px',
+          opacity: 0.8,
+          color: 'black',
+          border: '0px',
+          display: 'block'
+      };
+      return {
+          style: style
+      };
+  }
 
     render() {
 
@@ -89,7 +184,8 @@ export default class ClientCalendar extends React.Component {
         <div>
           <div className="calendar-outter-container">
             <div className="calendar-inner-container">
-              <CalendarCheckBoxes filteredProjects={this.filteredProjects} projectCategories={this.state.projectCategories}/>
+              <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
+              <SlideInToDoList admins={this.props.admins} />
               {this.state.addProjectModalOpen ?
                 <Modal
                   closeOnOuterClick={true}
@@ -98,16 +194,28 @@ export default class ClientCalendar extends React.Component {
                   style={{background: 'rgba(0,0,0, .4)'}}
                   // containerStyle={{width: ''}}
                    >
-                   <AddProject close={this.close} projectData={this.state.projectData} addProject={this.addProject} projectCategories={this.state.projectCategories} />
+                   <AddProject admins={this.props.admins} close={this.close} projectData={this.state.projectData} addProject={this.addProject} projectCategories={this.state.projectCategories} />
                 </Modal>
                   : null}
+                {this.state.editProjectModalOpen ?
+
+                  <Modal
+                    closeOnOuterClick={true}
+                    show={this.state.editProjectModalOpen}
+                    onClose={this.close}
+                    containerStyle={{width: '70%'}}
+                    style={{background: 'rgba(0,0,0, .4)'}}>
+                    <EditProject deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
+                  </Modal> :
+                  null}
               <AddProjectCategory addProjectCategory={this.addProjectCategory} />
               <BigCalendar
+                eventPropGetter={(this.eventStyleGetter)}
                 popup
                 selectable
                 tep={60}
                 culture='en-GB'
-                // onSelectEvent={this.editEvent}
+                onSelectEvent={this.renderEditEvent}
                 onSelectSlot={this.renderAddProject}
                 events={this.state.filteredProjects}
                 views={['month', 'agenda']}/>

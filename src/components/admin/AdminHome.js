@@ -13,16 +13,23 @@ export default class AdminHome extends React.Component {
       currentUser: {},
       activeClient: null,
       clients: [],
+      admins: [],
       addClientDropdown: false,
       userDropdown: false
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     UsersAdapter.getClients()
     .then((clients) => {
       this.setState({
         clients: clients
+      })
+    })
+    UsersAdapter.getAdmins()
+    .then((admins) => {
+      this.setState({
+        admins:admins
       })
     })
   }
@@ -76,7 +83,7 @@ export default class AdminHome extends React.Component {
         <div className="col l10 m10 zero-side-pad">
           {this.state.activeClient === null ?
             <AdminHomeScreen /> :
-            <ActiveClient activeClient={this.state.activeClient} />
+            <ActiveClient admins={this.state.admins} activeClient={this.state.activeClient} />
           }
         </div>
       </div>

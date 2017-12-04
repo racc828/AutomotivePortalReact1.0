@@ -10,6 +10,15 @@ export default class UsersAdapter {
       .then( resp => resp.json())
   }
 
+  static getAdmins(){
+    return fetch('http://localhost:3000/api/v1/users/get_admins', {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({})
+    })
+      .then( resp => resp.json())
+  }
+
   static getClient(clientId){
     return fetch(`${path}/${clientId}`, {
       method: 'GET',

@@ -35,12 +35,12 @@ export default class AddClientForm extends React.Component {
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
           <h6> Add Client </h6>
-          <input name="company" type="text" onChange={this.handleChange} placeholder="Company"/>
-          <input name="firstname" type="text" onChange={this.handleChange} placeholder="First Name"/>
-          <input name="lastname" type="text" onChange={this.handleChange} placeholder="Last Name"/>
-          <input name="email" type="text" onChange={this.handleChange} placeholder="Email"/>
-          <input name="username" type="text" onChange={this.handleChange} placeholder="Username"/>
-          <input name="password" type="password" onChange={this.handleChange} placeholder="Password"/>
+          <input name="company" type="text" onChange={this.handleChange} placeholder="Company" required/>
+          <input name="firstname" type="text" onChange={this.handleChange} placeholder="First Name" required/>
+          <input name="lastname" type="text" onChange={this.handleChange} placeholder="Last Name" required/>
+          <input name="email" type="text" onChange={this.handleChange} placeholder="Email" required/>
+          <input name="username" type="text" onChange={this.handleChange} placeholder="Username" required/>
+          <input name="password" type="password" onChange={this.handleChange} placeholder="Password" required/>
           <button className="waves-effect waves-light btn" type="submit">Add</button>
         </form>
       </div>

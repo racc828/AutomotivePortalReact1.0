@@ -46,7 +46,7 @@ export default class ActiveClient extends React.Component {
         </div>
         <div className="active-section">
           <h5>{this.state.activeClient.company}</h5>
-          <ActiveSection activeClient={this.state.activeClient} activeSection={this.state.activeSection} />
+          <ActiveSection admins={this.props.admins} activeClient={this.state.activeClient} activeSection={this.state.activeSection} />
         </div>
       </div>
     )

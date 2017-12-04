@@ -10,7 +10,82 @@ export default class ProjectsAdapter {
         projectcategory_id: project.projectcategory_id,
         title: project.title,
         start:start,
-        end: end
+        end: end,
+        admins: project.admin
+      })
+    })
+    .then( resp => resp.json())
+  }
+
+  static filterProjects(projectCategoriesDeactivate, activeClient) {
+    return fetch('http://localhost:3000/api/v1/projects/filter_projects',{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        deactivatedCats: projectCategoriesDeactivate,
+        activeClient: activeClient
+      })
+    })
+    .then( resp => resp.json())
+  }
+
+  static activateCategory( projectCategoriesDeactivate, activateProjectId, activeClient) {
+    return fetch('http://localhost:3000/api/v1/projects/activate_category',{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        deactivatedCats: projectCategoriesDeactivate,
+        activeClient: activeClient,
+        activateProjectId: activateProjectId
+      })
+    })
+    .then( resp => resp.json())
+  }
+
+  static getMyProjects() {
+    return fetch('http://localhost:3000/api/v1/projects/get_my_projects',{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({})
+    })
+    .then( resp => resp.json())
+  }
+
+  static getProjectUsers(project) {
+    return fetch(`${path}/${project}`, {
+      method: 'GET',
+      headers: headers()
+    })
+    .then( resp => resp.json())
+  }
+
+  static editProjectTitle(newTitle, projectId) {
+    return fetch(`http://localhost:3000/api/v1/projects/update_title`, {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        title: newTitle,
+        project_id: projectId
+      })
+    })
+    .then( resp => resp.json())
+  }
+
+  static deleteProject(projectId) {
+    return fetch(`${path}/${projectId}`, {
+      method: 'DELETE',
+      headers: headers(),
+      body: JSON.stringify({})
+    })
+    .then( resp => resp.json())
+  }
+
+  static getAdminProjects(admin) {
+    return fetch('http://localhost:3000/api/v1/projects/get_admin_projects',{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        user_id: admin
       })
     })
     .then( resp => resp.json())

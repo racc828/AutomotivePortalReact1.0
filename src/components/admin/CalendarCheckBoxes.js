@@ -14,12 +14,12 @@ export default class CalendarCheckBoxes extends React.Component {
 
   render() {
     return(
-      <form>
-        <div className="checkbox-container">
+      <form className="inline">
+        <span className="checkbox-container">
           {this.props.projectCategories.map((category) => {
-            return <CalendarCheckBox filteredProjects={this.props.filteredProjects} category={category} />
+            return <CalendarCheckBox activateCats={this.props.activateCats} deactivateCats={this.props.deactivateCats} filteredProjects={this.props.filteredProjects} category={category} />
           })}
-        </div>
+        </span>
       </form>
     )
   }

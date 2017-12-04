@@ -28,7 +28,7 @@ export default class Login extends React.Component {
     return(
       <div className="row">
         <div className="container">
-            <div className="col l6">
+            <div className="col l6 login-box">
               <div className="z-depth-3">
                 <h5 className="center-align"> Login </h5>
                 <form className="login-form" onSubmit={this.handleSubmit}>
@@ -38,6 +38,9 @@ export default class Login extends React.Component {
                     <button className="waves-effect waves-light btn" type="submit">Sign In</button>
                   </div>
                 </form>
+                {this.props.error ?
+                  <p>Wrong email or password </p> : null 
+                }
               </div>
             </div>
         </div>
