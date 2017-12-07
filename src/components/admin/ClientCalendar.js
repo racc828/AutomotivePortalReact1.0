@@ -103,19 +103,21 @@ export default class ClientCalendar extends React.Component {
     })
   }
 
-  // activateCats = (activateProjectId) => {
-  //   let index = this.state.deactivateCats.indexOf(activateProjectId)
-  //   this.setState({
-  //     deactivateCats: this.state.deactivateCats.splice(index, 1)
-  //   }, () => {
-  //     ProjectsAdapter.filterProjects(this.state.deactivateCats, this.props.activeClient.id)
-  //     .then((data) => {
-  //       this.setState({
-  //         filteredProjects: data
-  //       })
-  //     })
-  //   })
-  // }
+  activateCats = (activateProjectId) => {
+    let newarray = this.state.deactivateCats.filter((category) => {
+      return category !== activateProjectId
+    })
+    this.setState({
+      deactivateCats: newarray
+    }, () => {
+      ProjectsAdapter.filterProjects(this.state.deactivateCats, this.props.activeClient.id)
+      .then((data) => {
+        this.setState({
+          filteredProjects: data
+        })
+      })
+    })
+  }
 
   renderEditEvent = (data) => {
     this.setState({
@@ -137,17 +139,18 @@ export default class ClientCalendar extends React.Component {
        ],
        projectData: data
      });
-
     })
   }
 
-  // deletes on backend only
   deleteProject = (projectId) => {
     ProjectsAdapter.deleteProject(projectId)
     .then((data) => {
-      let index = this.state.filteredProjects.findIndex(project=> project.id === data.id)
+      let newarray = this.state.filteredProjects.filter((project) => {
+        return project.id !== projectId
+      })
       this.setState({
-        editProjectModalOpen:false
+        editProjectModalOpen:false,
+        filteredProjects: newarray
       })
     })
   }
@@ -185,7 +188,7 @@ export default class ClientCalendar extends React.Component {
           <div className="calendar-outter-container">
             <div className="calendar-inner-container">
               <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
-              <SlideInToDoList admins={this.props.admins} />
+              <SlideInToDoList currentUser={this.props.currentUser} admins={this.props.admins} />
               {this.state.addProjectModalOpen ?
                 <Modal
                   closeOnOuterClick={true}

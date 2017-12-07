@@ -5,6 +5,7 @@ import UsersAdapter from '../../adapters/UsersAdapter'
 import AddClientForm from './AddClientForm'
 import '../../css/admin.css'
 import AdminHomeScreen from './AdminHomeScreen'
+import ProjectsAdapter from '../../adapters/ProjectsAdapter'
 
 export default class AdminHome extends React.Component {
   constructor(){
@@ -15,7 +16,8 @@ export default class AdminHome extends React.Component {
       clients: [],
       admins: [],
       addClientDropdown: false,
-      userDropdown: false
+      userDropdown: false,
+      myProjects: []
     }
   }
 
@@ -83,7 +85,7 @@ export default class AdminHome extends React.Component {
         <div className="col l10 m10 zero-side-pad">
           {this.state.activeClient === null ?
             <AdminHomeScreen /> :
-            <ActiveClient admins={this.state.admins} activeClient={this.state.activeClient} />
+            <ActiveClient admins={this.state.admins} activeClient={this.state.activeClient} currentUser={this.props.currentUser}/>
           }
         </div>
       </div>

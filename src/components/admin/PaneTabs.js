@@ -11,6 +11,7 @@ export default class PaneTabs extends React.Component {
     }
   }
 
+
   closeAdminProjects = () => {
     this.setState({
       adminProjects: false,
@@ -26,13 +27,15 @@ export default class PaneTabs extends React.Component {
   }
 
   render() {
+    console.log(this.props)
+    debugger
     return(
       <div>
         {this.state.myProjects ?
           <div>
             <button className="active-tab"> My Projects </button>
             <button className="non-active-tab" onClick={this.closeMyProjects}> Admin Projects </button>
-            <MyProjects myProjects={this.props.myProjects} />
+            <MyProjects currentUser={this.props.currentUser} myProjects={this.props.myProjects} />
           </div>
            :
            <div>

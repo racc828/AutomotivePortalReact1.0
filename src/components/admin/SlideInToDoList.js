@@ -10,21 +10,19 @@ export default class SlideInToDoList extends React.Component{
     super(props)
     this.state ={
       paneOpen: false,
-      adminProjects: [],
       myProjects: []
     }
   }
-
 
   componentDidMount() {
     ProjectsAdapter.getMyProjects()
     .then((data) => {
       this.setState({
-        myProjects: data,
-
+        myProjects: data
       })
     })
   }
+
 
   openPane = () => {
     this.setState({
@@ -45,7 +43,7 @@ export default class SlideInToDoList extends React.Component{
                 onRequestClose={ () => {
                     this.setState({ paneOpen: false });
                 } }>
-                <PaneTabs myProjects={this.state.myProjects} admins={this.props.admins} />
+                <PaneTabs myProjects={this.state.myProjects} currentUser={this.props.currentUser} admins={this.props.admins} />
         </SlidingPane>
       </span>
     )
