@@ -3,8 +3,9 @@ import React from 'react'
 export default class AdminHome extends React.Component {
   render() {
     return(
-      <div>
-        AdminHome NO active Client
+      <div className="center">
+        <h2>Welcome {this.props.currentUser.firstname}</h2>
+        <p>Click on a client to get started</p>
       </div>
     )
   }

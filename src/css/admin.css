@@ -35,6 +35,11 @@ select {
   border:none;
 }
 
+.thumbnail-img {
+  max-width:200px;
+  height:auto;
+}
+
 .plus {
   display:inline-block;
 }

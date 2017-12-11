@@ -1,0 +1,16 @@
+.client-logout {
+  float:right;
+}
+
+.client-logout .fa-caret-down {
+  margin-left:10px;
+}
+
+.client-dropdown {
+  text-align:right;
+}
+.btn:focus,
+.btn:active,
+.btn:hover {
+  background:#f9423a;
+}

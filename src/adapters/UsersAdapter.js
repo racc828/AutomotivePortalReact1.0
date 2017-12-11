@@ -2,7 +2,8 @@ const path = 'http://localhost:3000/api/v1/users'
 export default class UsersAdapter {
 
   static getClients(){
-    return fetch('http://localhost:3000/api/v1/users/get_clients', {
+
+    return fetch(`${path}/get_clients`, {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({})
@@ -11,7 +12,7 @@ export default class UsersAdapter {
   }
 
   static getAdmins(){
-    return fetch('http://localhost:3000/api/v1/users/get_admins', {
+    return fetch(`${path}/get_admins`, {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({})
@@ -28,7 +29,8 @@ export default class UsersAdapter {
   }
 
   static getProjectCategories(clientId){
-    return fetch('http://localhost:3000/api/v1/users/get_client_project_categories', {
+
+    return fetch(`${path}/get_client_project_categories`, {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({
@@ -37,6 +39,7 @@ export default class UsersAdapter {
     })
       .then( resp => resp.json())
   }
+
 
   static addClient(newClient){
     return fetch(path, {

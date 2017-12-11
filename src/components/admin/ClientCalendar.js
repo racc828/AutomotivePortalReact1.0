@@ -155,17 +155,6 @@ export default class ClientCalendar extends React.Component {
     })
   }
 
-
-  // filteredProjects = (filteredProject) => {
-  //   ProjectsAdapter.filterProjects(filteredProject, this.props.activeClient.id)
-  //   .then((data) => {
-  //     this.setState({
-  //       filteredProjects: data,
-  //       deactivateCats: [...this.state.deactivatCats, filteredProject]
-  //     })
-  //   })
-  // }
-
   eventStyleGetter = (event, start, end, isSelected) => {
       var backgroundColor = event.category_color;
       var style = {

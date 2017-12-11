@@ -5,7 +5,9 @@ export default class AddProjectComment extends React.Component {
     super()
     this.state = {
       clientView:false,
-      comment: ""
+      comment: "",
+      file: "",
+      imagePreviewUrl: ""
     }
   }
 
@@ -13,6 +15,7 @@ export default class AddProjectComment extends React.Component {
   handleChange = (e) => {
     let property = e.target.name
     let value = e.target.value
+    debugger
     this.setState({
       [property]: value
     })
@@ -33,15 +36,40 @@ export default class AddProjectComment extends React.Component {
     this.setState({
       comment: ""
     })
+
+  }
+
+  handleFileChange = (e) => {
+    debugger
+    // NOTE: this will open the file reader on ur computer
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+    reader.readAsDataURL(file)
   }
 
 
   render() {
+    let imagePreviewUrl = this.state.imagePreviewUrl;
+    let imagePreview = null;
+    if (imagePreviewUrl) {
+      imagePreview = (<img className="thumbnail-img" src={imagePreviewUrl} />);
+    } else {
+      imagePreview = (<div></div>);
+    }
     return(
       <div>
         <h6>Add Comment:</h6>
         <form onSubmit={this.handleSubmit}>
-          <textarea name="comment" value={this.state.comment} onChange={this.handleChange}/>
+          <textarea className="margin-bottom" name="comment" value={this.state.comment} onChange={this.handleChange}/>
           <div className="switch margin-bottom">
              <label>
               Client View
@@ -49,7 +77,14 @@ export default class AddProjectComment extends React.Component {
                <span className="lever"></span>
              </label>
            </div>
-          <button className="btn" type="submit">Comment</button>
+           <div className="margin-bottom">
+             <input onChange={this.handleFileChange}
+               accept="image/*" type="file" name="file" />
+           </div>
+           <div>
+              {imagePreview}
+           </div>
+          <button className="btn margin-bottom" type="submit">Comment</button>
         </form>
 
       </div>

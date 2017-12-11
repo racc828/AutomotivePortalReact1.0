@@ -18,7 +18,8 @@ export default class ProjectsAdapter {
   }
 
   static filterProjects(projectCategoriesDeactivate, activeClient) {
-    return fetch('http://localhost:3000/api/v1/projects/filter_projects',{
+
+    return fetch(`${path}/filter_projects`,{
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({
@@ -30,7 +31,7 @@ export default class ProjectsAdapter {
   }
 
   static activateCategory( projectCategoriesDeactivate, activateProjectId, activeClient) {
-    return fetch('http://localhost:3000/api/v1/projects/activate_category',{
+    return fetch(`${path}/activate_category`,{
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({
@@ -43,7 +44,8 @@ export default class ProjectsAdapter {
   }
 
   static getMyProjects() {
-    return fetch('http://localhost:3000/api/v1/projects/get_my_projects',{
+
+    return fetch(`${path}/get_my_projects`,{
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({})
@@ -59,8 +61,19 @@ export default class ProjectsAdapter {
     .then( resp => resp.json())
   }
 
+  static showClientComments(project) {
+    return fetch(`${path}/get_client_comments`, {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        project_id: project
+      })
+    })
+    .then( resp => resp.json())
+  }
+
   static editProjectTitle(newTitle, projectId) {
-    return fetch(`http://localhost:3000/api/v1/projects/update_title`, {
+    return fetch(`${path}/update_title`, {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({
@@ -81,7 +94,8 @@ export default class ProjectsAdapter {
   }
 
   static getAdminProjects(admin) {
-    return fetch('http://localhost:3000/api/v1/projects/get_admin_projects',{
+
+    return fetch(`${path}/get_admin_projects`,{
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({
