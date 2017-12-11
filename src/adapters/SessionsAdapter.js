@@ -15,8 +15,7 @@ export default class SessionsAdapter {
       method: 'GET',
       headers: headers()
     })
-      .then(res=> { return res.json()
-    })
+    .then( resp => resp.json())
   }
 
 }
@@ -26,6 +25,6 @@ let headers = () => {
   return {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `${token}`
+    'Authorization': "Token token=" + localStorage.getItem('jwt')
   }
 }
