@@ -1,6 +1,7 @@
 import React from 'react'
 import ClientCalendar from './ClientCalendar'
 import ClientCreative from './ClientCreative'
+import ClientAnalytics from './ClientAnalytics'
 
 export default class ActiveSection extends React.Component {
 
@@ -16,10 +17,7 @@ export default class ActiveSection extends React.Component {
       )
     } else {
       return(
-        <div>
-          Analytics
-        </div>
-        // <ClientAnalytics activeClient={this.props.activeClient} />
+        <ClientAnalytics activeClient={this.props.activeClient} />
       )
     }
   }

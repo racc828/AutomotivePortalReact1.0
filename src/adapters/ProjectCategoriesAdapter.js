@@ -1,4 +1,4 @@
-const path = 'http://localhost:3000/api/v1/projectcategories'
+const path = 'https://protected-anchorage-66850.herokuapp.com/api/v1/projectcategories'
 export default class ProjectCategoriesAdapter {
 
   static addProjectCategory(projectCategory, userId) {
