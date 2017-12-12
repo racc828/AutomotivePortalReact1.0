@@ -1,3 +1,5 @@
+// const path = 'http://localhost:3000/api/v1/projects'
+
 const path = 'https://protected-anchorage-66850.herokuapp.com/api/v1/projects'
 export default class ProjectsAdapter {
 

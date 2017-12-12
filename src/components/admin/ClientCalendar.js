@@ -12,6 +12,7 @@ import AddProject from './AddProject'
 import EditProject from './EditProject'
 import SlideInToDoList from './SlideInToDoList'
 
+
 BigCalendar.momentLocalizer(moment);
 
 export default class ClientCalendar extends React.Component {

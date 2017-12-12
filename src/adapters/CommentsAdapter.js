@@ -1,3 +1,5 @@
+// const path = 'http://localhost:3000/api/v1/comments'
+
 const path = 'https://protected-anchorage-66850.herokuapp.com/api/v1/comments'
 export default class CommentsAdapter {
 

@@ -8,6 +8,8 @@ import CalendarCheckBoxes from './CalendarCheckBoxes'
 import Modal, {closeStyle} from 'simple-react-modal'
 import ProjectCategoriesAdapter from '../../adapters/ProjectCategoriesAdapter'
 import AddProjectComment from './AddProjectComment'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 
 
@@ -91,6 +93,15 @@ export default class ClientCalendar extends React.Component {
     })
   }
 
+  // downloadPdf = () => {
+  //      html2canvas(document.body).then(function(canvas) {
+  //        let imgData = canvas.toDataURL('image/png');
+  //        let pdf = new jsPDF();
+  //        pdf.addImage(imgData, 'JPEG', 0, 0);
+  //        pdf.save("download.pdf");
+  //      });
+  // }
+
 
   eventStyleGetter = (event, start, end, isSelected) => {
       var backgroundColor = event.category_color;
@@ -114,6 +125,7 @@ export default class ClientCalendar extends React.Component {
           <div className="calendar-outter-container">
             <div className="calendar-inner-container">
               <h5>{this.props.currentUser.company}</h5>
+              <i className="fa fa-download" onClick={this.downloadPdf}></i>
               <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
               {this.state.editProjectModalOpen ?
                 <Modal
