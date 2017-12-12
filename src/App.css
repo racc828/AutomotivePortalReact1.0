@@ -34,6 +34,13 @@ body {
   border-bottom:1px solid #000;
 }
 
+.login-container h3 {
+  position:absolute;
+  width:100%;
+  left:0;
+  top:14%;
+  margin:0 auto;
+}
 
 .edit-icon-right {
   position:absolute;

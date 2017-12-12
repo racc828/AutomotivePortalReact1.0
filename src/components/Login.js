@@ -27,7 +27,8 @@ export default class Login extends React.Component {
   render() {
     return(
       <div className="row">
-        <div className="container">
+        <div className="container login-container">
+            <h3 className="center-align text-primary">Donovan/Green</h3>
             <div className="col l6 login-box">
               <div className="z-depth-3">
                 <h5 className="center-align"> Login </h5>
@@ -39,7 +40,7 @@ export default class Login extends React.Component {
                   </div>
                 </form>
                 {this.props.error ?
-                  <p>Wrong email or password </p> : null 
+                  <p>Wrong email or password </p> : null
                 }
               </div>
             </div>
