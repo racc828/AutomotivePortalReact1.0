@@ -12,13 +12,13 @@ export default class SessionsAdapter {
     .then( resp => resp.json())
   }
 
-  // static currentUser(){
-  //   return fetch(`${path}/current_user`, {
-  //     method: 'GET',
-  //     headers: headers()
-  //   })
-  //   .then( resp => resp.json())
-  // }
+  static currentUser(){
+    return fetch(`${path}/current_user`, {
+      method: 'GET',
+      headers: headers()
+    })
+    .then( resp => resp.json())
+  }
 
 }
 
@@ -27,6 +27,6 @@ let headers = () => {
   return {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    // 'Authorization': `${token}`
+    'Authorization': `${token}`
   }
 }
