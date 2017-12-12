@@ -25,6 +25,6 @@ let headers = () => {
   return {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': "Token token=" + localStorage.getItem('jwt')
+    'Authorization': `${token}`
   }
 }
