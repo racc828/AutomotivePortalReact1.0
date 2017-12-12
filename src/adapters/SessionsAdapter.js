@@ -12,9 +12,8 @@ export default class SessionsAdapter {
 
   static currentUser(){
     return fetch(`${path}/current_user`, {
-      method: 'POST',
-      headers: headers(),
-      body:JSON.stringify({})
+      method: 'GET',
+      headers: headers()
     })
     .then( resp => resp.json())
   }
