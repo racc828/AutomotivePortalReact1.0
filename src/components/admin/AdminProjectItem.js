@@ -6,8 +6,14 @@ export default class AdminProjectItem extends React.Component {
     var style = {
       color: `${this.props.project.category_color}`
     }
-    return(
-      <li style={style}>{this.props.project.title}</li>
-    )
+    if(!this.props.project.completed) {
+      return(
+        <li style={style}>{this.props.project.title}</li>
+      )
+    } else {
+      return(
+        <div></div>
+      )
+    }
   }
 }

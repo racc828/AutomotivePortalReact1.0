@@ -78,6 +78,10 @@ body {
   float:right;
 }
 
+.switch label input[type=checkbox]:checked+.lever {
+  background:#efd8d7!important;
+}
+
 .trashcan:hover {
   background:transparent!important;
   box-shadow:none!important;
