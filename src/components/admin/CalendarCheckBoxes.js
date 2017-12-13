@@ -13,6 +13,7 @@ export default class CalendarCheckBoxes extends React.Component {
 
 
   render() {
+    debugger
     return(
       <form className="inline">
         <span className="checkbox-container">

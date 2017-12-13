@@ -31,7 +31,7 @@ export default class Login extends React.Component {
             <h3 className="center-align text-primary">Donovan/Green</h3>
             <div className="col l6 login-box">
               <div className="z-depth-3">
-                <h5 className="center-align"> Login </h5>
+                <h5 className="center-align"> Sign In </h5>
                 <form className="login-form" onSubmit={this.handleSubmit}>
                   <input name="email" type="email" placeholder="email" onChange={this.handleChange} />
                   <input name="password" type="password" placeholder="password" onChange={this.handleChange} />
