@@ -72,8 +72,23 @@ body {
   color:#fff;
 }
 
-.edit-icon-right i {
+.trashcan {
+  background:none;
+  box-shadow:none;
+  float:right;
+}
+
+.trashcan:hover {
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+.trashcan i {
   color:#f9423a;
+}
+
+.edit-icon-right i {
+  color:#fff;
   font-size:1.0rem;
 }
 

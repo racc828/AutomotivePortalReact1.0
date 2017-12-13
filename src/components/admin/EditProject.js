@@ -34,7 +34,7 @@ export default class EditProject extends React.Component {
   }
 
   deleteProject = () => {
-    this.props.deleteProject(this.props.projectData.id)
+      this.props.deleteProject(this.props.projectData.id)
   }
 
 
@@ -42,15 +42,11 @@ export default class EditProject extends React.Component {
   render() {
     return(
       <div>
-        <div className="modal-header">
-           <i className="fa fa-times float-right-times" onClick={this.props.close}></i>
-           <h5> Edit Project </h5>
-         </div>
          <div className="form-container">
-           <EditProjectData addProjectComment={this.addProjectComment} editProjectTitle={this.props.editProjectTitle} projectComments={this.state.projectComments} projectData={this.props.projectData} projectUsers={this.state.projectUsers} />
-           <button onClick={this.deleteProject} className="btn">
+           <button onClick={this.deleteProject} className="btn trashcan">
              <i className="fa fa-trash"></i>
            </button>
+           <EditProjectData markProjectCompleted={this.props.markProjectCompleted} close={this.props.close} addProjectComment={this.addProjectComment} editProjectTitle={this.props.editProjectTitle} projectComments={this.state.projectComments} projectData={this.props.projectData} projectUsers={this.state.projectUsers} />
          </div>
       </div>
     )

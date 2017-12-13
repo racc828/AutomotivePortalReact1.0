@@ -121,6 +121,7 @@ export default class ClientCalendar extends React.Component {
   }
 
   renderEditEvent = (data) => {
+    debugger
     this.setState({
       editProjectModalOpen:true,
       projectData: data
@@ -129,6 +130,22 @@ export default class ClientCalendar extends React.Component {
 
   editProjectTitle = (newTitle, projectId) => {
     ProjectsAdapter.editProjectTitle(newTitle, projectId)
+    .then((data) => {
+      let index = this.state.filteredProjects.findIndex(project=> project.id === data.id)
+
+      this.setState({
+        filteredProjects: [
+         ...this.state.filteredProjects.slice(0,index),
+         Object.assign({}, this.state.filteredProjects[index], data),
+         ...this.state.filteredProjects.slice(index+1)
+       ],
+       projectData: data
+     });
+    })
+  }
+
+  markProjectCompleted = (value, projectId) => {
+    ProjectsAdapter.markProjectCompleted(value, projectId)
     .then((data) => {
       let index = this.state.filteredProjects.findIndex(project=> project.id === data.id)
 
@@ -158,11 +175,18 @@ export default class ClientCalendar extends React.Component {
 
   eventStyleGetter = (event, start, end, isSelected) => {
       var backgroundColor = event.category_color;
+      var completed = ""
+      if (event.completed) {
+         completed = "line-through"
+      } else {
+         completed = "none"
+      }
       var style = {
           backgroundColor: backgroundColor,
           borderRadius: '0px',
           opacity: 0.8,
           color: 'black',
+          textDecoration: completed,
           border: '0px',
           display: 'block'
       };
@@ -198,7 +222,7 @@ export default class ClientCalendar extends React.Component {
                     onClose={this.close}
                     containerStyle={{width: '70%'}}
                     style={{background: 'rgba(0,0,0, .4)'}}>
-                    <EditProject deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
+                    <EditProject markProjectCompleted={this.markProjectCompleted} deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
                   </Modal> :
                   null}
               <AddProjectCategory addProjectCategory={this.addProjectCategory} />

@@ -10,7 +10,8 @@ export default class AddProjectForm extends React.Component {
       projectcategory_id: "",
       title: "",
       admin: [],
-      allDay: false
+      allDay: false,
+      completed: false
     }
   }
 
@@ -46,13 +47,13 @@ export default class AddProjectForm extends React.Component {
       this.props.addProject(project, start, end)
     }
 
-  handleToggle = (e) => {
-    if(e.target.value == "on"){
-      this.setState({
-        allDay:true
-      })
-    }
-  }
+  // handleToggle = (e) => {
+  //   if(e.target.value == "on"){
+  //     this.setState({
+  //       allDay:true
+  //     })
+  //   }
+  // }
 
   render() {
     return(
@@ -66,15 +67,7 @@ export default class AddProjectForm extends React.Component {
             return <ProjectCategoryOption category={category} />
           })}
         </select>
-        <div className="align-left margin-top">
-            <div className="switch">
-               <label>
-                All Day
-                 <input onChange={this.handleToggle} type="checkbox"/>
-                 <span className="lever"></span>
-               </label>
-             </div>
-          </div>
+      
           <div className="align-left margin-top">
             <h6><strong>Subscribe people to receive email notifications</strong></h6>
             {this.props.admins.map((admin) => {

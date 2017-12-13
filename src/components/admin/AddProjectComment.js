@@ -22,9 +22,13 @@ export default class AddProjectComment extends React.Component {
   }
 
   handleToggle = (e) => {
-    if(e.target.value == "on"){
+    if(e.target.checked == true){
       this.setState({
         clientView:true
+      })
+    } else {
+      this.setState({
+        clientView:false
       })
     }
   }

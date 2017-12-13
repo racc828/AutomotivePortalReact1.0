@@ -68,6 +68,13 @@ select {
   margin-bottom:20px;
 }
 
+.editTitle {
+  padding-left:25px!important;
+  margin-bottom:0!important;
+  font-size:1.64rem!important;
+  width:auto!important;
+}
+
 .login-box {
   margin:0 auto!important;
   margin-top:20%!important;

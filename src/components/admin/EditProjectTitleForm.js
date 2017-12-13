@@ -28,8 +28,7 @@ export default class EditProjectTitleForm extends React.Component {
     return(
       <div className="relative">
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange} name="title" type="text" value={this.state.title}/>
-          <button className="edit-icon-right" type="submit"><i className="fa fa-floppy-o"></i></button>
+          <input className="editTitle" onChange={this.handleChange} name="title" type="text" value={this.state.title}/>
         </form>
       </div>
     )

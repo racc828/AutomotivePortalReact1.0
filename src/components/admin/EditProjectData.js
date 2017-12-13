@@ -4,14 +4,16 @@ import EditProjectUsers from './EditProjectUsers'
 import AddProjectComment from './AddProjectComment'
 
 export default class EditProjectData extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      showEditTitle: false
+      showEditTitle: false,
+      completed: this.props.projectData.completed
     }
   }
 
   editTitle = (e) => {
+    debugger
     this.setState({
       showEditTitle: !this.state.showEditTitle
     })
@@ -23,12 +25,43 @@ export default class EditProjectData extends React.Component {
     })
   }
 
+  handleToggle = (e) => {
+    if(e.target.checked == true){
+      let completed = e.target.checked
+      this.props.markProjectCompleted(completed, this.props.projectData.id)
+      this.setState({
+        completed: completed
+      })
+    } else {
+      let notCompleted = e.target.checked
+      this.props.markProjectCompleted(notCompleted, this.props.projectData.id)
+      this.setState({
+        completed: notCompleted
+      })
+    }
+  }
+
 
   render() {
     return(
       <div>
-        {this.state.showEditTitle ? <EditProjectTitleForm closeEditTitle={this.closeEditTitle} editProjectTitle={this.props.editProjectTitle}
-          projectId={this.props.projectData.id} title={this.props.projectData.title} /> : <div className="relative"><p><strong>{this.props.projectData.title}</strong></p> <button className="edit-icon-right"><i className="fa fa-pencil" onClick={this.editTitle}></i></button></div> }
+        {this.state.showEditTitle ?
+          <div className="modal-header">
+            <EditProjectTitleForm closeEditTitle={this.closeEditTitle} editProjectTitle={this.props.editProjectTitle}
+            projectId={this.props.projectData.id} title={this.props.projectData.title} />
+          </div> :
+          <div className="modal-header">
+             <i className="fa fa-times float-right-times" onClick={this.props.close}></i>
+             <h5 onDoubleClick={this.editTitle}> <strong>{this.props.projectData.title}</strong> </h5>
+           </div>
+        }
+        <div className="switch margin-bottom">
+           <label>
+            Completed
+             <input onChange={this.handleToggle} type="checkbox" checked={this.state.completed} />
+             <span className="lever"></span>
+           </label>
+         </div>
           {this.props.projectComments.map((comment) => {
             return (
               <div className="comment">
