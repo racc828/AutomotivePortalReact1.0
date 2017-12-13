@@ -32,15 +32,15 @@ export default class ClientCalendar extends React.Component {
         }
     }
 
-    componentDidMount() {
-      UsersAdapter.getProjectCategories(this.props.activeClient.id)
-      .then(data => {
-        this.setState({
-          projectCategories: data.projectcategories,
-          filteredProjects: data.projects
-        })
-      })
-    }
+    // componentDidMount() {
+    //   UsersAdapter.getProjectCategories(this.props.activeClient.id)
+    //   .then(data => {
+    //     this.setState({
+    //       projectCategories: data.projectcategories,
+    //       filteredProjects: data.projects
+    //     })
+    //   })
+    // }
 
   componentWillReceiveProps(props) {
     UsersAdapter.getProjectCategories(props.activeClient.id)
