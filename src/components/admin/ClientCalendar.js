@@ -33,11 +33,19 @@ export default class ClientCalendar extends React.Component {
         }
     }
 
-    // componentDidMount() {
-    //   this.setState({
-    //     loading:false
+    // componentWillMount() {
+    //   console.log(this.props.activeClient.id)
+    //   UsersAdapter.getProjectCategories(this.props.activeClient.id)
+    //   .then(data => {
+    //     debugger
+    //     this.setState({
+    //       projectCategories: data.projectcategories,
+    //       filteredProjects: data.projects,
+    //       loading:false
+    //     })
     //   })
     // }
+
 
   componentWillReceiveProps(props) {
     UsersAdapter.getProjectCategories(props.activeClient.id)
