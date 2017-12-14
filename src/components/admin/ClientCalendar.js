@@ -48,8 +48,10 @@ export default class ClientCalendar extends React.Component {
 
 
   componentWillReceiveProps(props) {
+    console.log(props.activeClient.firstname)
     UsersAdapter.getProjectCategories(props.activeClient.id)
     .then(data => {
+      debugger
       this.setState({
         projectCategories: data.projectcategories,
         filteredProjects: data.projects,
