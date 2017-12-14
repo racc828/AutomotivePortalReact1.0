@@ -27,18 +27,15 @@ export default class ClientCalendar extends React.Component {
           projectData: null,
           projects: [],
           deactivateCats: [],
-          SlideInToDoListVisible: false
+          SlideInToDoListVisible: false,
+          loading:true
 
         }
     }
 
     // componentDidMount() {
-    //   UsersAdapter.getProjectCategories(this.props.activeClient.id)
-    //   .then(data => {
-    //     this.setState({
-    //       projectCategories: data.projectcategories,
-    //       filteredProjects: data.projects
-    //     })
+    //   this.setState({
+    //     loading:false
     //   })
     // }
 
@@ -47,7 +44,8 @@ export default class ClientCalendar extends React.Component {
     .then(data => {
       this.setState({
         projectCategories: data.projectcategories,
-        filteredProjects: data.projects
+        filteredProjects: data.projects,
+        loading:false
       })
     })
   }
@@ -201,8 +199,9 @@ export default class ClientCalendar extends React.Component {
         <div>
           <div className="calendar-outter-container">
             <div className="calendar-inner-container">
+              {this.state.loading ? <div className="loader-container"><div className="loader"></div></div> : null }
               <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
-              <SlideInToDoList currentUser={this.props.currentUser} admins={this.props.admins} />
+              <SlideInToDoList  myProjects={this.props.myProjects} currentUser={this.props.currentUser} admins={this.props.admins} />
               {this.state.addProjectModalOpen ?
                 <Modal
                   closeOnOuterClick={true}

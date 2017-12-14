@@ -1,6 +1,6 @@
-// const path = 'http://localhost:3000/api/v1/projectcategories'
+const path = 'http://localhost:3000/api/v1/projectcategories'
 
-const path = 'https://dg-automotive-portal-backend.herokuapp.com/api/v1/projectcategories'
+// const path = 'https://dg-automotive-portal-backend.herokuapp.com/api/v1/projectcategories'
 
 export default class ProjectCategoriesAdapter {
 

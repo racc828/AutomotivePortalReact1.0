@@ -9,7 +9,7 @@ export default class ActiveSection extends React.Component {
   render() {
     if (this.props.activeSection === 1) {
       return(
-        <ClientCalendar admins={this.props.admins} activeClient={this.props.activeClient} currentUser={this.props.currentUser} />
+        <ClientCalendar admins={this.props.admins} activeClient={this.props.activeClient} currentUser={this.props.currentUser} myProjects={this.props.myProjects} />
       )
     } else if (this.props.activeSection === 2) {
       return(

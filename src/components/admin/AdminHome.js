@@ -8,6 +8,7 @@ import AdminHomeScreen from './AdminHomeScreen'
 import ProjectsAdapter from '../../adapters/ProjectsAdapter'
 
 export default class AdminHome extends React.Component {
+
   constructor(){
     super()
     this.state = {
@@ -17,11 +18,13 @@ export default class AdminHome extends React.Component {
       admins: [],
       addClientDropdown: false,
       userDropdown: false,
-      myProjects: []
+      myProjects: [],
+      loading:true
     }
   }
 
   componentDidMount() {
+    window.onpopstate = this.onBackButtonEvent
     UsersAdapter.getClients()
     .then((clients) => {
       this.setState({
@@ -34,6 +37,17 @@ export default class AdminHome extends React.Component {
         admins:admins
       })
     })
+    ProjectsAdapter.getMyProjects()
+    .then((data) => {
+      this.setState({
+        myProjects: data,
+        loading:false
+      })
+    })
+  }
+
+  onBackButtonEvent = (e) => {
+    e.preventDefault()
   }
 
   setActiveClient = (clientId) => {
@@ -64,6 +78,7 @@ export default class AdminHome extends React.Component {
   render() {
     return(
       <div className="row">
+      {this.state.loading ? <div className="loader-container"><div className="loader"></div></div> : null }
         <div className="col l2 m2 side-navigation">
           <div className="side-nav-top">
             <h5 className="text-primary">Donovan/Green</h5>
@@ -85,7 +100,7 @@ export default class AdminHome extends React.Component {
         <div className="col l10 m10 zero-side-pad">
           {this.state.activeClient === null ?
             <AdminHomeScreen currentUser={this.props.currentUser} /> :
-            <ActiveClient admins={this.state.admins} activeClient={this.state.activeClient} currentUser={this.props.currentUser}/>
+            <ActiveClient myProjects={this.state.myProjects} admins={this.state.admins} activeClient={this.state.activeClient} currentUser={this.props.currentUser}/>
           }
         </div>
       </div>
