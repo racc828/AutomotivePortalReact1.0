@@ -97,7 +97,7 @@ export default class AdminHome extends React.Component {
             : null }
           <ClientNavigation setActiveClient={this.setActiveClient} clients={this.state.clients} />
         </div>
-        <div className="col l10 m10 zero-side-pad">
+        <div className="col l10 m10 main-body zero-side-pad">
           {this.state.activeClient === null ?
             <AdminHomeScreen currentUser={this.props.currentUser} /> :
             <ActiveClient myProjects={this.state.myProjects} admins={this.state.admins} activeClient={this.state.activeClient} currentUser={this.props.currentUser}/>

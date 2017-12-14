@@ -72,7 +72,7 @@ export default class EditProjectData extends React.Component {
           })}
           <AddProjectComment addProjectComment={this.props.addProjectComment} />
           <h6>Active Project Admins:</h6>
-          <EditProjectUsers projectUsers={this.props.projectUsers} />
+          <EditProjectUsers admins={this.props.admins} projectUsers={this.props.projectUsers} addProjectUser={this.props.addProjectUser} />
       </div>
     )
   }

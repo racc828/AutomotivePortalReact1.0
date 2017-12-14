@@ -119,7 +119,6 @@ export default class ClientCalendar extends React.Component {
   }
 
   renderEditEvent = (data) => {
-    debugger
     this.setState({
       editProjectModalOpen:true,
       projectData: data
@@ -221,7 +220,7 @@ export default class ClientCalendar extends React.Component {
                     onClose={this.close}
                     containerStyle={{width: '70%'}}
                     style={{background: 'rgba(0,0,0, .4)'}}>
-                    <EditProject markProjectCompleted={this.markProjectCompleted} deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
+                    <EditProject admins={this.props.admins} markProjectCompleted={this.markProjectCompleted} deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
                   </Modal> :
                   null}
               <AddProjectCategory addProjectCategory={this.addProjectCategory} />

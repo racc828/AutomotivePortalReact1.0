@@ -1,10 +1,9 @@
-// const path = 'http://localhost:3000/api/v1/projects'
+const path = 'http://localhost:3000/api/v1/projects'
 
-const path = 'https://dg-automotive-portal-backend.herokuapp.com/api/v1/projects'
+// const path = 'https://dg-automotive-portal-backend.herokuapp.com/api/v1/projects'
 export default class ProjectsAdapter {
 
   static addProject(project, start, end) {
-    debugger
     return fetch(path,{
       method: 'POST',
       headers: headers(),
@@ -15,6 +14,30 @@ export default class ProjectsAdapter {
         end: end,
         completed: project.completed,
         admins: project.admin
+      })
+    })
+    .then( resp => resp.json())
+  }
+
+  static editProjectToAddUser(userId, projectId) {
+    return fetch(`${path}/edit_add_user_to_project`,{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        project_id: projectId,
+        user_id: userId
+      })
+    })
+    .then( resp => resp.json())
+  }
+
+  static editProjectToDeleteUser(userId, projectId) {
+    return fetch(`${path}/edit_delete_user_to_project`,{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        project_id: projectId,
+        user_id: userId
       })
     })
     .then( resp => resp.json())

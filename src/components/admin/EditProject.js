@@ -22,11 +22,25 @@ export default class EditProject extends React.Component {
     })
   }
 
+  addProjectUser = (value, userId) => {
+    if(value == true) {
+      ProjectsAdapter.editProjectToAddUser(userId, this.props.projectData.id)
+      .then((data) => {
+        projectUsers: data
+      })
+    } else {
+      ProjectsAdapter.editProjectToDeleteUser(userId, this.props.projectData.id)
+      .then((data) => {
+        projectUsers:data
+      })
+    }
+
+  }
+
 
   addProjectComment = (projectComment) => {
     CommentsAdapter.addComment(projectComment, this.props.projectData.id)
     .then((data) => {
-      debugger
       this.setState({
         projectComments: [...this.state.projectComments, data]
       })
@@ -46,7 +60,7 @@ export default class EditProject extends React.Component {
            <button onClick={this.deleteProject} className="btn trashcan">
              <i className="fa fa-trash"></i>
            </button>
-           <EditProjectData markProjectCompleted={this.props.markProjectCompleted} close={this.props.close} addProjectComment={this.addProjectComment} editProjectTitle={this.props.editProjectTitle} projectComments={this.state.projectComments} projectData={this.props.projectData} projectUsers={this.state.projectUsers} />
+           <EditProjectData addProjectUser={this.addProjectUser} admins={this.props.admins} markProjectCompleted={this.props.markProjectCompleted} close={this.props.close} addProjectComment={this.addProjectComment} editProjectTitle={this.props.editProjectTitle} projectComments={this.state.projectComments} projectData={this.props.projectData} projectUsers={this.state.projectUsers} />
          </div>
       </div>
     )

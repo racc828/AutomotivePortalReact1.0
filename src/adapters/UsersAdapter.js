@@ -1,5 +1,5 @@
-const path = 'https://dg-automotive-portal-backend.herokuapp.com/api/v1/users'
-// const path = 'http://localhost:3000/api/v1/users'
+// const path = 'https://dg-automotive-portal-backend.herokuapp.com/api/v1/users'
+const path = 'http://localhost:3000/api/v1/users'
 export default class UsersAdapter {
 
   static getClients(){
