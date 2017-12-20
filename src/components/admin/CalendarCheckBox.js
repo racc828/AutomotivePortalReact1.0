@@ -1,4 +1,5 @@
 import React from 'react'
+import styler from 'react-styling'
 
 export default class CalendarCheckBox extends React.Component {
 
@@ -8,7 +9,6 @@ export default class CalendarCheckBox extends React.Component {
       checked:true
     }
   }
-
 
   handleCheck = (e) => {
     this.setState({
@@ -22,13 +22,21 @@ export default class CalendarCheckBox extends React.Component {
   }
 
   render() {
-    var style = {
-      borderBottom: `4px solid ${this.props.category.color}`
-    }
+
+    // var styles = {
+    //   color: `${this.props.category.color}`
+    // }
+
+    const style = styler
+    `
+        .label {
+          color: ${this.props.category.color};
+        }
+    `
     return(
       <span>
-         <input className="checkbox" type="checkbox" id={this.props.category.title} checked={this.state.checked} onChange={this.handleCheck} />
-         <label style={style} for={this.props.category.title}>{this.props.category.title}</label>
+         <input className="check-box" type="checkbox" id={this.props.category.title} checked={this.state.checked} onChange={this.handleCheck} />
+         <label style={style.label} for={this.props.category.title}>{this.props.category.title}</label>
        </span>
     )
   }

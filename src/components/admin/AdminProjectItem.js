@@ -3,6 +3,7 @@ import React from 'react'
 export default class AdminProjectItem extends React.Component {
 
   render() {
+    debugger
     var style = {
       color: `${this.props.project.category_color}`
     }

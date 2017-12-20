@@ -26,11 +26,11 @@ export default class UsersAdapter {
       method: 'GET',
       headers: headers()
     })
-      .then( resp => resp.json())
+    .then( resp => resp.json())
   }
 
   static getProjectCategories(clientId){
-
+    console.log(clientId)
     return fetch(`${path}/get_client_project_categories`, {
       method: 'POST',
       headers: headers(),
@@ -38,7 +38,7 @@ export default class UsersAdapter {
         user_id: clientId
       })
     })
-      .then( resp => resp.json())
+    .then( resp => resp.json())
   }
 
 

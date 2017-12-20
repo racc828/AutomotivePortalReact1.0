@@ -6,6 +6,7 @@ import AddClientForm from './AddClientForm'
 import '../../css/admin.css'
 import AdminHomeScreen from './AdminHomeScreen'
 import ProjectsAdapter from '../../adapters/ProjectsAdapter'
+import SlideInToDoList from './SlideInToDoList'
 
 export default class AdminHome extends React.Component {
 
@@ -19,7 +20,8 @@ export default class AdminHome extends React.Component {
       addClientDropdown: false,
       userDropdown: false,
       myProjects: [],
-      loading:true
+      loading:true,
+      paneOpen: false
     }
   }
 
@@ -43,6 +45,18 @@ export default class AdminHome extends React.Component {
         myProjects: data,
         loading:false
       })
+    })
+  }
+
+  openPane = () => {
+    this.setState({
+      paneOpen:true
+    })
+  }
+
+  closePane = () => {
+    this.setState({
+      paneOpen:false
     })
   }
 
@@ -79,14 +93,20 @@ export default class AdminHome extends React.Component {
     return(
       <div className="row">
       {this.state.loading ? <div className="loader-container"><div className="loader"></div></div> : null }
-        <div className="col l2 m2 side-navigation">
+        <div className="col l3 m3 side-navigation">
           <div className="side-nav-top">
             <h5 className="text-primary">Donovan/Green</h5>
             <div className="relative">
               <strong>{this.props.currentUser.firstname} {this.props.currentUser.lastname}</strong>
-              <button className="caret-button"><i className="fa fa-caret-down" onClick={this.toggleUserDropdown}></i></button>
+              <div className="button-group">
+                <button className="button-inline"><i className="fa fa-comment" onClick={this.toggleUserDropdown}></i></button>
+                <button className="button-inline"><i className="fa fa-list" onClick={this.openPane}></i></button>
+                <button className="button-inline"><i className="fa fa-cog" onClick={this.toggleUserDropdown}></i></button>
+              </div>
             </div>
-            {this.state.userDropdown ? <button className="waves-effect waves-light btn" onClick={this.props.logOut}> LogOut </button> : null }
+            {this.state.userDropdown ?
+              <div className="userdropdown-container"><button className="waves-effect waves-light btn" onClick={this.props.logOut}> LogOut </button></div>
+              : null }
           </div>
           <div className="nav-header">
             <h6>CLIENTS </h6>
@@ -97,12 +117,13 @@ export default class AdminHome extends React.Component {
             : null }
           <ClientNavigation setActiveClient={this.setActiveClient} clients={this.state.clients} />
         </div>
-        <div className="col l10 m10 main-body zero-side-pad">
+        <div className="col l9 m9 main-body zero-side-pad">
           {this.state.activeClient === null ?
             <AdminHomeScreen currentUser={this.props.currentUser} /> :
             <ActiveClient myProjects={this.state.myProjects} admins={this.state.admins} activeClient={this.state.activeClient} currentUser={this.props.currentUser}/>
           }
         </div>
+        <SlideInToDoList openPane={this.openPane} closePane={this.closePane} paneStatus={this.state.paneOpen} myProjects={this.state.myProjects} currentUser={this.props.currentUser} admins={this.state.admins} />
       </div>
     )
   }

@@ -15,9 +15,18 @@ import SlideInToDoList from './SlideInToDoList'
 
 BigCalendar.momentLocalizer(moment);
 
+
 export default class ClientCalendar extends React.Component {
 
+
+
     constructor(props, context) {
+      var dateObj = new Date();
+      var months = [ "January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December" ];
+      var month = months[dateObj.getMonth()]
+      var year = dateObj.getUTCFullYear()
+      var monthYear = `${month} / ${year}`
       super(props, context)
         this.state = {
           projectCategories: [],
@@ -28,30 +37,27 @@ export default class ClientCalendar extends React.Component {
           projects: [],
           deactivateCats: [],
           SlideInToDoListVisible: false,
-          loading:true
+          loading:true,
+          monthLabel: monthYear,
+          view:"calendar"
 
         }
     }
 
-    // componentWillMount() {
-    //   console.log(this.props.activeClient.id)
-    //   UsersAdapter.getProjectCategories(this.props.activeClient.id)
-    //   .then(data => {
-    //     debugger
-    //     this.setState({
-    //       projectCategories: data.projectcategories,
-    //       filteredProjects: data.projects,
-    //       loading:false
-    //     })
-    //   })
-    // }
+    componentDidMount() {
+      debugger
+      this.setState({
+        loading:false
+      })
+    }
 
 
-  componentWillReceiveProps(props) {
-    console.log(props.activeClient.firstname)
-    UsersAdapter.getProjectCategories(props.activeClient.id)
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.activeClient.id)
+    UsersAdapter.getProjectCategories(nextProps.activeClient.id)
     .then(data => {
       debugger
+      console.log(data)
       this.setState({
         projectCategories: data.projectcategories,
         filteredProjects: data.projects,
@@ -59,6 +65,7 @@ export default class ClientCalendar extends React.Component {
       })
     })
   }
+
 
   addProjectCategory = (projectCategory) => {
     ProjectCategoriesAdapter.addProjectCategory(projectCategory, this.props.activeClient.id)
@@ -180,6 +187,89 @@ export default class ClientCalendar extends React.Component {
     })
   }
 
+   getCalendarEvents = (date) => {
+      const {project} = this;
+      const startDate = moment(date).add(-1, 'month').toDate();
+      const endDate = moment(date).endOf('month').toDate();
+      const currentMonth = moment(date).endOf('month').format('MMMM YYYY');
+      const monthToday = moment(date).endOf('month').format('MMM');
+      let nextCurrentMonth = moment(date).add(1, 'month').format('MMM');
+
+      this.setState({
+        monthLabel: currentMonth,
+        currentMonth: monthToday,
+        nextMonth: nextCurrentMonth
+    });
+
+  }
+
+  getCustomToolbar = (toolbar) => {
+    this.toolbarDate = toolbar.date;
+
+    const goToMonthView = () => {
+    toolbar.onViewChange('month')
+    this.setState({
+      view: "calendar"
+    })
+  }
+
+    const goToAgendaView = () => {
+    toolbar.onViewChange('agenda')
+    this.setState({
+      view: "agenda"
+    })
+  }
+
+    const goToBack = () => {
+      let mDate = toolbar.date;
+      let newDate = new Date(
+        mDate.getFullYear(),
+        mDate.getMonth() - 1,
+        1);
+      toolbar.onNavigate('prev', newDate);
+      this.getCalendarEvents(newDate);
+
+    }
+    const goToNext = () => {
+      let mDate = toolbar.date;
+      let newDate = new Date(
+        mDate.getFullYear(),
+        mDate.getMonth() + 1,
+        1);
+      toolbar.onNavigate('next', newDate);
+      this.getCalendarEvents(newDate);
+
+    }
+    return (
+      <div className="toolbar-container">
+        <div className="navigation-buttons">
+          <button className="toolbar-btn" onClick={goToBack}>
+            <i className="fa fa-caret-left"></i>
+          </button>
+          <span className='label-date'>{this.state.monthLabel}</span>
+          <button className="toolbar-btn" onClick={goToNext}>
+              <i className="fa fa-caret-right"></i>
+          </button>
+        </div>
+        <div className="filter-container">
+          {this.state.view === "calendar" ?
+          <div>
+            <button className="bg-filter-off active" onClick={goToMonthView}><span className="label-filter-off">Calendar</span></button>
+            <button className="bg-filter-off" onClick={goToAgendaView}><span className="label-filter-off">List View</span></button>
+          </div>
+          :
+          <div>
+            <button className="bg-filter-off" onClick={goToMonthView}><span className="label-filter-off">Calendar</span></button>
+            <button className="bg-filter-off active" onClick={goToAgendaView}><span className="label-filter-off">List View</span></button>
+          </div>
+        }
+
+         </div>
+
+      </div>
+    )
+  }
+
   eventStyleGetter = (event, start, end, isSelected) => {
       var backgroundColor = event.category_color;
       var completed = ""
@@ -192,7 +282,7 @@ export default class ClientCalendar extends React.Component {
           backgroundColor: backgroundColor,
           borderRadius: '0px',
           opacity: 0.8,
-          color: 'black',
+          color: 'fff',
           textDecoration: completed,
           border: '0px',
           display: 'block'
@@ -210,7 +300,6 @@ export default class ClientCalendar extends React.Component {
             <div className="calendar-inner-container">
               {this.state.loading ? <div className="loader-container"><div className="loader"></div></div> : null }
               <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
-              <SlideInToDoList  myProjects={this.props.myProjects} currentUser={this.props.currentUser} admins={this.props.admins} />
               {this.state.addProjectModalOpen ?
                 <Modal
                   closeOnOuterClick={true}
@@ -243,7 +332,14 @@ export default class ClientCalendar extends React.Component {
                 onSelectEvent={this.renderEditEvent}
                 onSelectSlot={this.renderAddProject}
                 events={this.state.filteredProjects}
-                views={['month', 'agenda']}/>
+                views={['month', 'agenda']}
+                defaultDate={new Date()}
+                dayFormat={'ddd d/MM'}
+                ref={c => { this.bigCalendar = c } }
+                components={{
+                  event: this.getCustomEvent,
+                  toolbar: this.getCustomToolbar
+                }}/>
             </div>
           </div>
         </div>

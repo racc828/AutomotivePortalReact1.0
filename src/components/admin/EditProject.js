@@ -15,6 +15,7 @@ export default class EditProject extends React.Component {
   componentDidMount() {
     ProjectsAdapter.getProjectUsers(this.props.projectData.id)
     .then((data) => {
+      debugger
       this.setState({
         projectUsers: data.users,
         projectComments: data.comments
@@ -54,11 +55,14 @@ export default class EditProject extends React.Component {
 
 
   render() {
+    var style = {
+      color: `${this.props.projectData.category_color}`
+    }
     return(
       <div>
          <div className="form-container">
            <button onClick={this.deleteProject} className="btn trashcan">
-             <i className="fa fa-trash"></i>
+             <i className="fa fa-trash" style={style}></i>
            </button>
            <EditProjectData addProjectUser={this.addProjectUser} admins={this.props.admins} markProjectCompleted={this.props.markProjectCompleted} close={this.props.close} addProjectComment={this.addProjectComment} editProjectTitle={this.props.editProjectTitle} projectComments={this.state.projectComments} projectData={this.props.projectData} projectUsers={this.state.projectUsers} />
          </div>

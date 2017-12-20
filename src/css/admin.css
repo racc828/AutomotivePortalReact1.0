@@ -178,6 +178,45 @@ select {
   margin:0;
 }
 
+.button-group {
+  position:absolute;
+  right:0;
+  top:0;
+}
+
+.button-inline {
+  background:0;
+  display:inline-block;
+  margin-left:3px;
+}
+
+.button-inline i {
+  color:#fff;
+}
+
+.button-inline:nth-child(2) {
+  background:#f9423a;
+}
+
+.button-inline:last-child {
+  margin-right:10px;
+  background:#6d6e71;
+}
+
+.userdropdown-container {
+  height:60px;
+  text-align:right;
+}
+
+.userdropdown-container button {
+  margin-top:15px;
+  margin-right:10px;
+}
+
+.button-inline:first-child {
+  background:#6d6e71;
+}
+
 .float-right-times {
   position:absolute;
   right:25px;
@@ -186,8 +225,20 @@ select {
   font-weight:200;
 }
 
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+  height:14px;
+  width:14px;
+  top:2px;
+}
+
+[type="checkbox"]:checked+label:before {
+  height:15px;
+  width:8px;
+  top:0;
+  left:0;
+}
+
 .modal-header {
-  background:#f9423a;
   color:#fff;
   position:absolute;
   top:0;

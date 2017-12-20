@@ -69,6 +69,10 @@ export default class AddProjectComment extends React.Component {
     } else {
       imagePreview = (<div></div>);
     }
+
+    var style = {
+      background: `${this.props.color}`
+    }
     return(
       <div>
         <h6>Add Comment:</h6>
@@ -88,7 +92,7 @@ export default class AddProjectComment extends React.Component {
            <div>
               {imagePreview}
            </div>
-          <button className="btn margin-bottom" type="submit">Comment</button>
+          <button style={style} className="btn margin-bottom" type="submit">Comment</button>
         </form>
 
       </div>
