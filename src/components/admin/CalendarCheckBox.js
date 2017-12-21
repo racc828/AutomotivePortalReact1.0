@@ -35,7 +35,7 @@ export default class CalendarCheckBox extends React.Component {
     `
     return(
       <span>
-         <input className="check-box" type="checkbox" id={this.props.category.title} checked={this.state.checked} onChange={this.handleCheck} />
+         <input data-html2canvas-ignore className="check-box" type="checkbox" id={this.props.category.title} checked={this.state.checked} onChange={this.handleCheck} />
          <label style={style.label} for={this.props.category.title}>{this.props.category.title}</label>
        </span>
     )

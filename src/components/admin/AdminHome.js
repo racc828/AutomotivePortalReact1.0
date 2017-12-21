@@ -99,7 +99,7 @@ export default class AdminHome extends React.Component {
             <div className="relative">
               <strong>{this.props.currentUser.firstname} {this.props.currentUser.lastname}</strong>
               <div className="button-group">
-                <button className="button-inline"><i className="fa fa-comment" onClick={this.toggleUserDropdown}></i></button>
+                <button className="button-inline"><i className="fa fa-comment"></i></button>
                 <button className="button-inline"><i className="fa fa-list" onClick={this.openPane}></i></button>
                 <button className="button-inline"><i className="fa fa-cog" onClick={this.toggleUserDropdown}></i></button>
               </div>

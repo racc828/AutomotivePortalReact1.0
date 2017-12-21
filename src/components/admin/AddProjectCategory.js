@@ -27,7 +27,7 @@ export default class AddProjectCategory extends React.Component {
 
   render() {
     return(
-      <span>
+      <span className="plus-container">
         <span className="plus">
           <i className="fa fa-plus" onClick={this.toggleAddProjectCategoryForm}></i>
         </span>

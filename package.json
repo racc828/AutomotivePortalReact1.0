@@ -16,6 +16,7 @@
     "react-scripts": "1.0.17",
     "react-sliding-pane": "^2.0.1",
     "react-styling": "^1.6.4",
+    "repng": "^1.0.0",
     "simple-react-modal": "^0.5.1"
   },
   "scripts": {

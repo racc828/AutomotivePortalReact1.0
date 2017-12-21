@@ -8,6 +8,10 @@ body {
   padding-left:23px;
 }
 
+.modal-header {
+  background:#f9423a;
+}
+
 .checkbox-container span {
   margin-left:10px;
 }
@@ -167,7 +171,11 @@ body {
   margin-left:25%!important;
 }
 
-
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell,
+.rbc-agenda-event-cell {
+  color:#fff;
+}
 .bg-primary {
   background:#f9423a;
 }

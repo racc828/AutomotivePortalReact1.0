@@ -99,14 +99,34 @@ class App extends Component {
 
 
   render() {
-    return (
-      <div className="App">
-        <Route exact path="/" render={this.renderLogin}/>
-        <Route exact path="/clientHome" render={this.renderClientHome}/>
-        <Route exact path="/adminHome" render={this.renderAdminHome}/>
-      </div>
-    );
+    if(this.state.currentUser.admin) {
+      return(
+        <div className="App">
+          <Route exact path="/" render={this.renderAdminHome}/>
+          <Route exact path="/adminHome" render={this.renderAdminHome}/>
+        </div>
+      )
+    } else if(this.state.currentUser.admin == false) {
+        return(
+          <div className="App">
+            <Route exact path="/" render={this.renderClientHome}/>
+            <Route exact path="/clientHome" render={this.renderClientHome}/>
+          </div>
+        )
+    } else {
+      return (
+        <div className="App">
+          <Route exact path="/" render={this.renderLogin}/>
+        </div>
+      )
+    }
   }
 }
+
+{/* <div className="App">
+  <Route exact path="/" render={this.renderLogin}/>
+  <Route exact path="/clientHome" render={this.renderClientHome}/>
+  <Route exact path="/adminHome" render={this.renderAdminHome}/>
+</div> */}
 
 export default App;

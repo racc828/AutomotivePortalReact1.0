@@ -14,3 +14,9 @@
 .btn:hover {
   background:#f9423a;
 }
+
+.fa-download {
+  color:#f9423a;
+  margin-left:20px;
+  font-size:1.2rem;
+}

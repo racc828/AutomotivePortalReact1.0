@@ -44,7 +44,7 @@ export default class ActiveClient extends React.Component {
         <div className="client-top-navigation bg-primary">
           <TopClientNavigation switchSection={this.switchSection} />
         </div>
-        <div className="active-section">
+        <div className="active-section" id="calendar">
           <h4>{this.state.activeClient.company}</h4>
           <ActiveSection myProjects={this.props.myProjects} currentUser={this.props.currentUser} admins={this.props.admins} activeClient={this.state.activeClient} activeSection={this.state.activeSection} />
         </div>

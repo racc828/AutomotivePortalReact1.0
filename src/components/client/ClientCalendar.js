@@ -18,14 +18,24 @@ BigCalendar.momentLocalizer(moment);
 export default class ClientCalendar extends React.Component {
 
     constructor(props, context) {
+      var dateObj = new Date();
+      var months = [ "January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December" ];
+      var month = months[dateObj.getMonth()]
+      var year = dateObj.getUTCFullYear()
+      var monthYear = `${month} / ${year}`
       super(props, context)
+
         this.state = {
           projectCategories: [],
           filteredProjects: [],
           editProjectModalOpen: false,
           projectData: null,
           projects: [],
-          deactivateCats: []
+          deactivateCats: [],
+          loading:true,
+          monthLabel: monthYear,
+          view:"calendar"
 
         }
     }
@@ -35,7 +45,8 @@ export default class ClientCalendar extends React.Component {
       .then(data => {
         this.setState({
           projectCategories: data.projectcategories,
-          filteredProjects: data.projects
+          filteredProjects: data.projects,
+          loading:false
         })
       })
     }
@@ -45,7 +56,8 @@ export default class ClientCalendar extends React.Component {
     .then(data => {
       this.setState({
         projectCategories: data.projectcategories,
-        filteredProjects: data.projects
+        filteredProjects: data.projects,
+        loading:false
       })
     })
   }
@@ -93,14 +105,99 @@ export default class ClientCalendar extends React.Component {
     })
   }
 
-  // downloadPdf = () => {
-  //      html2canvas(document.body).then(function(canvas) {
-  //        let imgData = canvas.toDataURL('image/png');
-  //        let pdf = new jsPDF();
-  //        pdf.addImage(imgData, 'JPEG', 0, 0);
-  //        pdf.save("download.pdf");
-  //      });
-  // }
+  downloadPdf = () => {
+
+    html2canvas(document.querySelector("#calendar")).then(canvas => {
+        let imgData = canvas.toDataURL('image/jpeg', 1.0);
+        let pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 10, 10, 185, 140);
+        pdf.save("download.pdf");
+      });
+
+  }
+
+  getCalendarEvents = (date) => {
+     const {project} = this;
+     const startDate = moment(date).add(-1, 'month').toDate();
+     const endDate = moment(date).endOf('month').toDate();
+     const currentMonth = moment(date).endOf('month').format('MMMM YYYY');
+     const monthToday = moment(date).endOf('month').format('MMM');
+     let nextCurrentMonth = moment(date).add(1, 'month').format('MMM');
+
+     this.setState({
+       monthLabel: currentMonth,
+       currentMonth: monthToday,
+       nextMonth: nextCurrentMonth
+   });
+
+ }
+
+ getCustomToolbar = (toolbar) => {
+   this.toolbarDate = toolbar.date;
+
+   const goToMonthView = () => {
+   toolbar.onViewChange('month')
+   this.setState({
+     view: "calendar"
+   })
+ }
+
+   const goToAgendaView = () => {
+   toolbar.onViewChange('agenda')
+   this.setState({
+     view: "agenda"
+   })
+ }
+
+   const goToBack = () => {
+     let mDate = toolbar.date;
+     let newDate = new Date(
+       mDate.getFullYear(),
+       mDate.getMonth() - 1,
+       1);
+     toolbar.onNavigate('prev', newDate);
+     this.getCalendarEvents(newDate);
+
+   }
+   const goToNext = () => {
+     let mDate = toolbar.date;
+     let newDate = new Date(
+       mDate.getFullYear(),
+       mDate.getMonth() + 1,
+       1);
+     toolbar.onNavigate('next', newDate);
+     this.getCalendarEvents(newDate);
+
+   }
+   return (
+     <div className="toolbar-container">
+       <div className="navigation-buttons">
+         <button className="toolbar-btn" onClick={goToBack}>
+           <i className="fa fa-caret-left"></i>
+         </button>
+         <span className='label-date'>{this.state.monthLabel}</span>
+         <button className="toolbar-btn" onClick={goToNext}>
+             <i className="fa fa-caret-right"></i>
+         </button>
+       </div>
+       <div className="filter-container">
+         {this.state.view === "calendar" ?
+         <div>
+           <button className="bg-filter-off active" onClick={goToMonthView}><span className="label-filter-off">Calendar</span></button>
+           <button className="bg-filter-off" onClick={goToAgendaView}><span className="label-filter-off">List View</span></button>
+         </div>
+         :
+         <div>
+           <button className="bg-filter-off" onClick={goToMonthView}><span className="label-filter-off">Calendar</span></button>
+           <button className="bg-filter-off active" onClick={goToAgendaView}><span className="label-filter-off">List View</span></button>
+         </div>
+       }
+
+        </div>
+
+     </div>
+   )
+ }
 
 
   eventStyleGetter = (event, start, end, isSelected) => {
@@ -122,10 +219,11 @@ export default class ClientCalendar extends React.Component {
 
       return (
         <div>
-          <div className="calendar-outter-container">
+          <div className="calendar-outter-container" id="calendar">
             <div className="calendar-inner-container">
-              <h5>{this.props.currentUser.company}</h5>
-              <i className="fa fa-download" onClick={this.downloadPdf}></i>
+              {this.state.loading ? <div className="loader-container"><div className="loader"></div></div> : null }
+              <h4>{this.props.currentUser.company} <i className="fa fa-download" onClick={this.downloadPdf}></i></h4>
+
               <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
               {this.state.editProjectModalOpen ?
                 <Modal
@@ -146,7 +244,14 @@ export default class ClientCalendar extends React.Component {
                 culture='en-GB'
                  onSelectEvent={this.renderCommentEvent}
                 events={this.state.filteredProjects}
-                views={['month', 'agenda']}/>
+                views={['month', 'agenda']}
+                defaultDate={new Date()}
+                dayFormat={'ddd d/MM'}
+                ref={c => { this.bigCalendar = c } }
+                components={{
+                  event: this.getCustomEvent,
+                  toolbar: this.getCustomToolbar
+                }}/>
             </div>
           </div>
         </div>

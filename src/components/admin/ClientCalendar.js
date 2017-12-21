@@ -11,6 +11,8 @@ import AddProjectCategory from './AddProjectCategory'
 import AddProject from './AddProject'
 import EditProject from './EditProject'
 import SlideInToDoList from './SlideInToDoList'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 
 BigCalendar.momentLocalizer(moment);
@@ -187,6 +189,17 @@ export default class ClientCalendar extends React.Component {
     })
   }
 
+  downloadPdf = () => {
+
+    html2canvas(document.querySelector("#calendar")).then(canvas => {
+        let imgData = canvas.toDataURL('image/jpeg', 1.0);
+        let pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 10, 10, 185, 140);
+        pdf.save("download.pdf");
+      });
+
+  }
+
    getCalendarEvents = (date) => {
       const {project} = this;
       const startDate = moment(date).add(-1, 'month').toDate();
@@ -296,33 +309,36 @@ export default class ClientCalendar extends React.Component {
 
       return (
         <div>
-          <div className="calendar-outter-container">
+          <div className="calendar-outter-container" >
             <div className="calendar-inner-container">
               {this.state.loading ? <div className="loader-container"><div className="loader"></div></div> : null }
-              <CalendarCheckBoxes activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
-              {this.state.addProjectModalOpen ?
-                <Modal
-                  closeOnOuterClick={true}
-                  show={this.state.addProjectModalOpen}
-                  onClose={this.close}
-                  style={{background: 'rgba(0,0,0, .4)'}}
-                  // containerStyle={{width: ''}}
-                   >
-                   <AddProject admins={this.props.admins} close={this.close} projectData={this.state.projectData} addProject={this.addProject} projectCategories={this.state.projectCategories} />
-                </Modal>
-                  : null}
-                {this.state.editProjectModalOpen ?
-
+              <i className="fa fa-download" onClick={this.downloadPdf}></i>
+              <div className="inline-flex">
+                <CalendarCheckBoxes  activateCats={this.activateCats} deactivateCats={this.deactivateCats} projectCategories={this.state.projectCategories}/>
+                {this.state.addProjectModalOpen ?
                   <Modal
                     closeOnOuterClick={true}
-                    show={this.state.editProjectModalOpen}
+                    show={this.state.addProjectModalOpen}
                     onClose={this.close}
-                    containerStyle={{width: '70%'}}
-                    style={{background: 'rgba(0,0,0, .4)'}}>
-                    <EditProject admins={this.props.admins} markProjectCompleted={this.markProjectCompleted} deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
-                  </Modal> :
-                  null}
-              <AddProjectCategory addProjectCategory={this.addProjectCategory} />
+                    style={{background: 'rgba(0,0,0, .4)'}}
+                    // containerStyle={{width: ''}}
+                     >
+                     <AddProject admins={this.props.admins} close={this.close} projectData={this.state.projectData} addProject={this.addProject} projectCategories={this.state.projectCategories} />
+                  </Modal>
+                    : null}
+                  {this.state.editProjectModalOpen ?
+
+                    <Modal
+                      closeOnOuterClick={true}
+                      show={this.state.editProjectModalOpen}
+                      onClose={this.close}
+                      containerStyle={{width: '70%'}}
+                      style={{background: 'rgba(0,0,0, .4)'}}>
+                      <EditProject admins={this.props.admins} markProjectCompleted={this.markProjectCompleted} deleteProject={this.deleteProject} editProjectTitle={this.editProjectTitle} close={this.close} projectData={this.state.projectData} />
+                    </Modal> :
+                    null}
+                <AddProjectCategory addProjectCategory={this.addProjectCategory} />
+              </div>
               <BigCalendar
                 eventPropGetter={(this.eventStyleGetter)}
                 popup
