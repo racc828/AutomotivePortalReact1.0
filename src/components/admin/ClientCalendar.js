@@ -46,12 +46,12 @@ export default class ClientCalendar extends React.Component {
         }
     }
 
-    componentDidMount() {
-      debugger
-      this.setState({
-        loading:false
-      })
-    }
+    // componentDidMount() {
+    //   debugger
+    //   this.setState({
+    //     loading:false
+    //   })
+    // }
 
 
   componentWillReceiveProps(nextProps) {
