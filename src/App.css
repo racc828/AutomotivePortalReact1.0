@@ -4,6 +4,15 @@ body {
   font-weight:300;
 }
 
+
+.rbc-agenda-view .rbc-header:nth-child(2) {
+  display:none;
+}
+
+.rbc-agenda-time-cell {
+  display:none;
+}
+
 [type="checkbox"]+label {
   padding-left:23px;
 }
